@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MyPet</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="name_label">Name:</string>
+    <string name="id_label">ID Number:</string>
+    <string name="sex_label">Sex:</string>
+    <string name="birthdate_label">Date of Birth:</string>
+    <string name="animal_type_label">Type of Animal:</string>
+    <string name="breed_label">Breed:</string>
+    <string name="hair_label">Hair colour:</string>
+    <string name="eye_label">Eye colour:</string>
+    <string name="height_label">Height:</string>
+    <string name="weight_label">Weight:</string>
+    <string name="image_logo">Pet\'s recent photo.</string>
+    <string name="age_label">Age:</string>
+</resources>
