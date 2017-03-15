@@ -7,10 +7,10 @@ package com.angie.mypet;
  */
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,13 +26,16 @@ public class Controller {
     private enum EyeColours {BLA, BRO, GOL, BLU, RED, GRA, GRN, ORG};
 
     MainActivity act;
+    List<Pet> animalsList;
     ListIterator<Pet> it;
     boolean prevCalled = false, nextCalled = false;
+
 
     public Controller(MainActivity act)
     {
         this.act = act;
     }
+
 
     // Initializes the App.
     public void InitializeApp()
@@ -44,7 +47,7 @@ public class Controller {
     //  Creates a hard-coded list of pets and makes the first of them to appear on screen.
     private void CreateAndShowPetFirstCard()
     {
-        List<Pet> animalsList = new ArrayList<Pet>();
+        animalsList = new ArrayList<Pet>();
         // Note: For this version animals will stand alone. In the future they will be linked to owners and vets.
 
        Pet pet1 = new Pet("Nuvoletta", "Cat0001", R.drawable.cat_chartreux_nuvoletta, null, null, Sexes.MAL.toString(),
@@ -107,6 +110,7 @@ public class Controller {
 
     }
 
+
     // Fetches the next pet from the List. Enables/disables buttons accordingly.
     public void fetchNextPet()
     {
@@ -121,18 +125,19 @@ public class Controller {
                 pet = (Pet) it.next();
                 if(prevCalled) pet = (Pet) it.next();  // This solves an Iterator perk.
                 this.makePetAppear(pet);
-                previousButton.setEnabled(true);
+                if(it.nextIndex() != 1)previousButton.setEnabled(true);
             }
 
             if (!(it.hasNext()))
             {
                nextButton.setEnabled(false);
             }
-        }
+         }
 
         prevCalled = false;
         nextCalled = true;
     }
+
 
     // Fetches the previous pet from the List. Enables/disables buttons accordingly.
     public void fetchPreviousPet()
@@ -227,5 +232,36 @@ public class Controller {
             Button previousButton = (Button) act.findViewById(R.id.button_previous);
             previousButton.setEnabled(false);
         }*/
+    }
+
+
+    // Saves the Pet that has appeared last on screen.
+    public void saveState(Bundle savedInstanceState)
+    {
+        int iterIndex = 0;
+        if(it!= null) iterIndex = it.nextIndex()-1;         // Getting current index of iterator, a.k.a. current pet.
+        if(prevCalled) iterIndex++;
+        if(iterIndex < 0) iterIndex = 0;
+        savedInstanceState.putInt("indexNo", iterIndex);    // Saving the iterator state.
+    }
+
+
+    // Restores the Pet that has appeared last on screen.
+    public void restorePreviousState(Bundle savedInstanceState)
+    {
+        int j = savedInstanceState.getInt("indexNo");       // Remembering the iterator latest state.
+        it = animalsList.listIterator();                    // Reseting iterator to null, just to make sure.
+
+        for (int a = 0; a < j; a++)
+        {
+            if(it.hasNext())
+            {
+                it.next();                                  // Reaching a place before the Pet that appeared last on screen.
+            }
+        }
+        if(it.hasNext())
+        {
+            this.fetchNextPet();                            // Fetching the information of the Pet that appeared last on screen.
+        }
     }
 }

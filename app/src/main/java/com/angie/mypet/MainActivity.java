@@ -13,17 +13,19 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState != null) {
-            // TODO
-        }
 
         c = new Controller(this);
         c.InitializeApp();
+
+        if (savedInstanceState != null) {
+            c.restorePreviousState(savedInstanceState);
+        }
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // TODO
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        c.saveState(savedInstanceState);
     }
 
     // "Next"  Button Clicked.
