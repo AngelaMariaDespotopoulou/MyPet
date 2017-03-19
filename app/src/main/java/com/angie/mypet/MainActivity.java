@@ -1,7 +1,9 @@
 package com.angie.mypet;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.Activity;
+//import android.util.Log;
 import android.view.View;
 
 
@@ -12,7 +14,16 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        // Determine Landscape or Portrait orientation and choose layout accordingly.
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            setContentView(R.layout.activity_main_landscape);
+        }
+        else
+        {
+            setContentView(R.layout.activity_main);
+        }
 
         c = new Controller(this);
         c.InitializeApp();

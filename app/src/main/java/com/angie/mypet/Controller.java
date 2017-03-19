@@ -14,16 +14,18 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 
 public class Controller {
 
     // Certain pet description aspects take particular values only.
-    private enum Sexes {MAL, FEM, UKN};
-    private enum HairColours {BLA, BRO, GOL, WHT, RED, GRA, BLU};
-    private enum EyeColours {BLA, BRO, GOL, BLU, RED, GRA, GRN, ORG};
+    Map hairColour;
+    Map eyeColour;
+    Map sexes;
 
     MainActivity act;
     List<Pet> animalsList;
@@ -33,6 +35,31 @@ public class Controller {
 
     public Controller(MainActivity act)
     {
+        eyeColour = new HashMap();
+        eyeColour.put("BLA", "Black");
+        eyeColour.put("BLU", "Blue");
+        eyeColour.put("BRO", "Brown");
+        eyeColour.put("GOL", "Golden");
+        eyeColour.put("RED", "Red");
+        eyeColour.put("GRA", "Gray");
+        eyeColour.put("GRN", "Green");
+        eyeColour.put("ORG", "Orange");
+
+        hairColour = new HashMap();
+        hairColour.put("BLA", "Black");
+        hairColour.put("BLU", "Blue");
+        hairColour.put("BRO", "Brown");
+        hairColour.put("GOL", "Golden");
+        hairColour.put("RED", "Red");
+        hairColour.put("GRA", "Gray");
+        hairColour.put("WHT", "White");
+        hairColour.put("ORG", "Orange");
+
+        sexes = new HashMap();
+        sexes.put("MAL", "Male");
+        sexes.put("FEM", "Female");
+        sexes.put("UNK", "Unknown");
+
         this.act = act;
     }
 
@@ -50,46 +77,46 @@ public class Controller {
         animalsList = new ArrayList<Pet>();
         // Note: For this version animals will stand alone. In the future they will be linked to owners and vets.
 
-       Pet pet1 = new Pet("Nuvoletta", "Cat0001", R.drawable.cat_chartreux_nuvoletta, null, null, Sexes.MAL.toString(),
-            new Date(2015-1900, 7, 23), HairColours.GRA.toString(), EyeColours.ORG.toString(), null, null, 25.4,
+       Pet pet1 = new Pet("Nuvoletta", "Cat0001", R.drawable.cat_chartreux_nuvoletta, null, null, sexes.get("MAL").toString(),
+            new Date(2015-1900, 7, 23), hairColour.get("GRA").toString(), eyeColour.get("ORG").toString(), null, null, 25.4,
             4.5, true, true, true, "Cat", "Chartreux");
         pet1.setComments("Info:\t\tNuvoletta is a quiet partner, is fully vaccinated and neutered. A bit overweight. Likes warmth and freedom.");
 
-        Pet pet2 = new Pet("Toby", "Cat0002", R.drawable.cat_britishblue_toby, null, null, Sexes.MAL.toString(),
-                new Date(2017-1900, 1, 4), HairColours.BLU.toString(), EyeColours.BLU.toString(), null, null, 30.0,
+        Pet pet2 = new Pet("Toby", "Cat0002", R.drawable.cat_britishblue_toby, null, null,  sexes.get("MAL").toString(),
+                new Date(2017-1900, 1, 4), hairColour.get("BLU").toString(), eyeColour.get("BLU").toString(), null, null, 30.0,
                 2.0, false, false, false, "Cat", "British Blue");
         pet2.setComments("Info:\t\tToby is a newborn kitty, not yet fully vaccinated. Still needs feeding. Has five siblings and is quite playful.");
 
-        Pet pet3 = new Pet("Isis", "Cat0003", R.drawable.cat_persiancat_isis, null, null, Sexes.FEM.toString(),
-                new Date(2014-1900, 5, 25), HairColours.WHT.toString(), EyeColours.GRN.toString(), null, null, 32.5,
+        Pet pet3 = new Pet("Isis", "Cat0003", R.drawable.cat_persiancat_isis, null, null,  sexes.get("FEM").toString(),
+                new Date(2014-1900, 5, 25), hairColour.get("WHT").toString(), eyeColour.get("GRN").toString(), null, null, 32.5,
                 6.0, false, true, true, "Cat", "Persian");
         pet3.setComments("Info:\t\tIsis became a mother recently, gave birth to a litter of six kitties. Her health is optimal and is fully vaccinated.");
 
-        Pet pet4 = new Pet("Hilda", "Cat0004", R.drawable.cat_siberiancat_hilda, null, null, Sexes.FEM.toString(),
-                new Date(2016-1900, 8, 10), HairColours.BRO.toString() + " " +  HairColours.WHT.toString(),
-                EyeColours.GRN.toString(), null, null, 28.2,
+        Pet pet4 = new Pet("Hilda", "Cat0004", R.drawable.cat_siberiancat_hilda, null, null,  sexes.get("FEM").toString(),
+                new Date(2016-1900, 8, 10), hairColour.get("BRO").toString() + " and " +  hairColour.get("WHT").toString(),
+                eyeColour.get("GRN").toString(), null, null, 28.2,
                 3.5, false, true, true, "Cat", "Siberian");
         pet4.setComments("Info:\t\tHilda is adapted to live in very cold climates. She is a good hunter and able to survive on her own. Fully vaccinated.");
 
-        Pet pet5 = new Pet("Rudy", "Dog0001", R.drawable.dog_beagle_rudy, null, null, Sexes.MAL.toString(),
-                new Date(2016-1900, 11, 11), HairColours.BRO.toString() + " " +  HairColours.WHT.toString()
-                + " " +  HairColours.BLA.toString(), EyeColours.BRO.toString(), null, null, 50.0,
+        Pet pet5 = new Pet("Rudy", "Dog0001", R.drawable.dog_beagle_rudy, null, null,  sexes.get("MAL").toString(),
+                new Date(2016-1900, 11, 11), hairColour.get("BRO").toString() + " and " +  hairColour.get("WHT").toString()
+                + " and " +  hairColour.get("BLA").toString(), eyeColour.get("BRO").toString(), null, null, 50.0,
                 7.0, true, true, true, "Dog", "Beagle");
         pet5.setComments("Info:\t\tRudy is a fast runner and quite playful. Carries a birthmark behind the left ear. Will be sent to training school next month.");
 
-        Pet pet6 = new Pet("Eva", "Dog0002", R.drawable.dog_bichonfrise_eva, null, null, Sexes.FEM.toString(),
-                new Date(2013-1900, 9, 5), HairColours.WHT.toString(), EyeColours.BLA.toString(), null, null, 300.0,
+        Pet pet6 = new Pet("Eva", "Dog0002", R.drawable.dog_bichonfrise_eva, null, null,  sexes.get("FEM").toString(),
+                new Date(2013-1900, 9, 5), hairColour.get("WHT").toString(), eyeColour.get("BLA").toString(), null, null, 300.0,
                 3.8, false, true, true, "Dog", "Bichon Frisé");
         pet6.setComments("Info:\t\tEva has recently won a beauty pageant. She is well trained and quiet, but not very used to living outdoors.");
 
-        Pet pet7 = new Pet("Mika", "Dog0003", R.drawable.dog_cotondetulear_mika, null, null, Sexes.FEM.toString(),
-                new Date(2017-1900, 3, 3), HairColours.WHT.toString(), EyeColours.BLA.toString(), null, null, 22.0,
+        Pet pet7 = new Pet("Mika", "Dog0003", R.drawable.dog_cotondetulear_mika, null, null,  sexes.get("FEM").toString(),
+                new Date(2017-1900, 3, 3), hairColour.get("WHT").toString(), eyeColour.get("BLA").toString(), null, null, 22.0,
                 2.5, false, false, false, "Dog", "Cotonde Tulear");
         pet7.setComments("Info:\t\tMika is a newborn puppy that is still breastfeeding. Her mother is still overprotective of her, however her health is optimal.");
 
-        Pet pet8 = new Pet("Fulstaf", "Dog0004", R.drawable.dog_icelandicsheepdog_fulstaf, null, null, Sexes.MAL.toString(),
-                new Date(2011-1900, 4, 4), HairColours.BRO.toString() + " " +  HairColours.WHT.toString(),
-                EyeColours.BLA.toString(), null, null, 70.0,
+        Pet pet8 = new Pet("Fulstaf", "Dog0004", R.drawable.dog_icelandicsheepdog_fulstaf, null, null, sexes.get("MAL").toString(),
+                new Date(2011-1900, 4, 4), hairColour.get("BRO").toString() + " and " +  hairColour.get("WHT").toString(),
+                eyeColour.get("BLA").toString(), null, null, 70.0,
                 6.0, true, false, true, "Dog", "Icelandic Sheepdog");
         pet8.setComments("Info:\t\tFulstaf adores to live outdoors and is a trained Sheepdog. He is loyal, quick-of-foot and can put a good fight. Bears minor scars.");
 
