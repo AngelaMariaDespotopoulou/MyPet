@@ -15,4 +15,11 @@
     <string name="weight_label">Weight:</string>
     <string name="image_logo">Pet\'s recent photo.</string>
     <string name="age_label">Age:</string>
+    <string name="pickone_label">Choose a Friend:</string>
+    <string name="dogs_category_label">Dogs</string>
+    <string name="cats_category_label">Cats</string>
+    <string name="unicorns_category_label">Unicorns</string>
+    <string name="other_category_label">Other</string>
+    <string name="random_text">random</string>
+    <string name="fairy_tale_message">Well, some say that a @Species can be found only in fairy tales. But, if you find a picture let us know.</string>
 </resources>
