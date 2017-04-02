@@ -1,197 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
     android:orientation="vertical"
-    android:tag="cards main container">
+    android:gravity="center"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.angie.mypet.MainActivity">
 
-    <TextView
-        android:id="@+id/name_label"
+    <ListView android:id="@+id/species_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="20sp"
-        android:textColor="@color/pickLabel"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/pickone_label" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/photo_area"
-        android:layout_above="@id/buttons">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-
-            android:orientation="vertical"
-            android:tag="cards main container">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="5dp"
-                    card_view:cardUseCompatPadding="true">
-
-
-                    <ImageView
-                        android:id="@+id/imageView1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/dog_cotondetulear_mika"
-                        android:tag="image_tag" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="5dp"
-                    card_view:cardUseCompatPadding="true">
-
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/cat_britishblue_toby"
-                        android:tag="image_tag" />
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textSize="15sp"
-                    android:textColor="@color/pickLabel"
-                    android:layout_marginRight="90dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="3dp"
-                    android:text="@string/dogs_category_label" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/cats_category_label"
-                    android:textColor="@color/pickLabel"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="5dp"
-                    card_view:cardUseCompatPadding="true">
-
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/unicorn"
-                        android:tag="image_tag" />
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="5dp"
-                    card_view:cardUseCompatPadding="true">
-
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/paws"
-                        android:tag="image_tag" />
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textSize="15sp"
-                    android:textColor="@color/pickLabel"
-                    android:layout_marginRight="70dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="3dp"
-                    android:text="@string/unicorns_category_label" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textSize="15sp"
-                    android:textColor="@color/pickLabel"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="3dp"
-                    android:text="@string/other_category_label" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_height="0dp"
+        android:dividerHeight="15dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>
 
+
+    <!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:tag="cards main container">
+
+        <TextView
+            android:id="@+id/name_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:textColor="@color/pickLabel"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/pickone_label" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/photo_area"
+            android:layout_above="@id/buttons">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical"
+                android:tag="cards main container">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="5dp"
+                        card_view:cardUseCompatPadding="true">
+
+
+                        <ImageView
+                            android:id="@+id/imageView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/dog_cotondetulear_mika"
+                            android:tag="image_tag" />
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="5dp"
+                        card_view:cardUseCompatPadding="true">
+
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/cat_britishblue_toby"
+                            android:tag="image_tag" />
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textSize="15sp"
+                        android:textColor="@color/pickLabel"
+                        android:layout_marginRight="90dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/dogs_category_label" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/cats_category_label"
+                        android:textColor="@color/pickLabel"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="5dp"
+                        card_view:cardUseCompatPadding="true">
+
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/unicorn"
+                            android:tag="image_tag" />
+
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="10dp"
+                        card_view:cardElevation="5dp"
+                        card_view:cardUseCompatPadding="true">
+
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/paws"
+                            android:tag="image_tag" />
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textSize="15sp"
+                        android:textColor="@color/pickLabel"
+                        android:layout_marginRight="70dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/unicorns_category_label" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textSize="15sp"
+                        android:textColor="@color/pickLabel"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/other_category_label" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+    -->
