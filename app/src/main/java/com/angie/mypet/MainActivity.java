@@ -1,6 +1,6 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 2nd April 2017.
+// Latest Update: 30th April 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet;
@@ -26,6 +26,7 @@ import java.util.List;
 
 
 public class MainActivity extends Activity {
+
     private List<String> species;                   // A list to store all available species.
     private ListView listView;                      // A list view widget.
     private BaseAdapter speciesListAdapter;         // An adapter for the listView widget.
@@ -50,7 +51,7 @@ public class MainActivity extends Activity {
         }
 
         // Creating the database containing all the Pets. (Hard-coded for the moment.)
-        petsDatabase = new PetsDatabase();
+        petsDatabase = new PetsDatabase(this.getBaseContext());
         species = petsDatabase.generateSpeciesList();
 
         // Assigning a listener to the species view.
@@ -74,8 +75,8 @@ public class MainActivity extends Activity {
         );
 
         // Aesthetic changes.
-        listView.setBackgroundColor(Color.DKGRAY);
-
+        listView.setCacheColorHint(0);
+        listView.setBackgroundResource(R.drawable.vector);
 
         // Assigning a simple adapter (provided by Android) to the list view.
         speciesListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, species) {
@@ -83,7 +84,7 @@ public class MainActivity extends Activity {
             // Handling aesthetic aspects.
             public View getView(int position, View convertView, ViewGroup parent) {
                 TextView textView = (TextView) super.getView(position, convertView, parent);
-                textView.setTextColor(Color.WHITE);
+                textView.setTextColor(Color.rgb(145, 42, 42));
                 textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
                 textView.setShadowLayer(1.5f, -2, 2, Color.GRAY);
                 textView.setTextSize(20);
@@ -93,6 +94,16 @@ public class MainActivity extends Activity {
         listView.setAdapter(this.speciesListAdapter);
         listView.setVisibility(View.VISIBLE);
     }
+
+
+    //*****************************************************************************************************************************
+    // onDestroy method.
+    // Closing the active cursor.
+    //*****************************************************************************************************************************
+    public void onDestroy(){
+        super.onDestroy();
+        petsDatabase.closeConnectionToDatabase();
+    }
 }
 
 
@@ -101,7 +112,7 @@ public class MainActivity extends Activity {
 
 
 
-    //Safekeeping the code below for historical reasons.
+//Safekeeping the code below for historical reasons.
 
    /*
    @Override

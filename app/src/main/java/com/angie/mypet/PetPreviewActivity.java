@@ -1,33 +1,30 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 2nd April 2017.
+// Latest Update: 23rd April 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class PetPreviewActivity extends Activity {
 
     public static final String EXTRA_SPECIES = "species_selected";        // Used for receiving messages from MainActivity.
     String speciesFromIntent;                                             // The same practically.
     private ListView listView;                                            // A list view widget.
-    private BaseAdapter petsListAdapter;                                  // An adapter for the listView widget.
     Intent receivedIntent;                                                // A message received from MainActivity.
     Intent browseIntent;                                                  // A new message directed to BrowseActivity.
-    private ArrayList<Pet> petsOfSpecies;                                 // A list to store pets (for various reasons).
+    public static Cursor petsOfSpecies ;                                  // A set of pets belonging to a particular species.
     TextView hiddenText;                                                  // A hidden message for empty categories.
 
 
@@ -62,31 +59,31 @@ public class PetPreviewActivity extends Activity {
         // Specifying the species view.
         listView = (ListView) findViewById(R.id.preview_pets_list);
 
+        // Assigning a custom adapter to the list view.
+
+        CursorAdapter listAdapter = new PetPreviewAdapter(this, petsOfSpecies, 0);
+        listView.setAdapter(listAdapter);
+
         // Assigning a Listener to the custom list view.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                    public void onItemClick(AdapterView<?> list, View row, int index, long rowId) {
+                                            public void onItemClick(AdapterView<?> list, View row, int index, long rowId) {
 
-                        // Let's animate things a bit...
-                        Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);
-                        row.startAnimation(animation1);
+                                                // Let's animate things a bit...
+                                                Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);
+                                                row.startAnimation(animation1);
 
-                        // Create and handle intent. Pass the selected species and petID to the PetPreviewActivity.
-                        browseIntent = new Intent(PetPreviewActivity.this, BrowseActivity.class);
-                        Pet choice = (Pet)list.getAdapter().getItem(index);
-                        browseIntent.putExtra(BrowseActivity.EXTRA_PET_ID, choice.getPetId());
-                        browseIntent.putExtra(BrowseActivity.EXTRA_SPECIES, choice.getTypeOfAnimal());
-                        startActivity(browseIntent);
-                    }
-                }
+                                                // Create and handle intent. The cursor is waiting. Passing the position (chosen pet) to the BrowseActivity.
+                                                browseIntent = new Intent(PetPreviewActivity.this, BrowseActivity.class);
+                                                Cursor cursor = (Cursor) list.getAdapter().getItem(index);
+                                                browseIntent.putExtra(BrowseActivity.EXTRA_PET_CURSOR_POSITION, cursor.getPosition());
+                                                startActivity(browseIntent);
+                                            }
+                                        }
         );
 
-        // Assigning a custom adapter to the list view.
-        petsListAdapter = new PetPreviewAdapter(this, petsOfSpecies);
-        listView.setAdapter(this.petsListAdapter);
-
-        // Handling the empty category. Control is transfered to BrowseActivity without making the listView visible.
-        if(petsOfSpecies.isEmpty())
+        // Handling the empty category. Control is transferred to BrowseActivity without making the listView visible.
+        if(petsOfSpecies.getCount() < 1)
         {
             listView.setVisibility(View.INVISIBLE);
 
@@ -97,7 +94,7 @@ public class PetPreviewActivity extends Activity {
             return;
         }
         else
-         listView.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.VISIBLE);
     }
 
 
@@ -110,6 +107,16 @@ public class PetPreviewActivity extends Activity {
     public void onSaveInstanceState(Bundle savedInstanceState)
     {
         savedInstanceState.putString("species", speciesFromIntent);       // Committing current species to memory.
+    }
+
+
+    //*****************************************************************************************************************************
+    // onDestroy method.
+    // Closing the active cursor.
+    //*****************************************************************************************************************************
+    public void onDestroy(){
+        super.onDestroy();
+        petsOfSpecies.close();
     }
 
 }

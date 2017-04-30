@@ -1,10 +1,11 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 2nd April 2017.
+// Latest Update: 30th April 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -15,13 +16,16 @@ import android.widget.TextView;
 
 public class Controller {
 
-	// Certain pet description aspects take particular values only.
-	BrowseActivity act;		    // A reference to the calling Browse Activity.
-	String species;             // A memory to preserve the species in question.
-	String currentPetId;        // A memory to preserve the id of the pet that currently appears on screen.
-	Pet currentPet;             // A memory to preserve the pet that currently appears on screen.
 
+	BrowseActivity act;		              // A reference to the calling Browse Activity.
+	int petCursorPosition;                // A memory to preserve current pet on screen.
+	int cursorSize;                       // How many pets belong to a species.
+
+
+	//*****************************************************************************************************************************
 	// Constructor Method.
+	//*****************************************************************************************************************************
+
 	public Controller(BrowseActivity act)
 	{
 		this.act = act;
@@ -33,32 +37,36 @@ public class Controller {
 	// Also enables/disables the buttons accordingly.
 	//*****************************************************************************************************************************
 
-	public void InitializeBrowsing(String species, String currentPetId)
+	public void InitializeBrowsing(int petCursorPosition)
 	{
 		// Legacy code: Hide the hidden message for non-existent animals.
 		TextView hiddenText = (TextView)act.findViewById(R.id.hidden_message);
 		hiddenText.setVisibility(View.INVISIBLE);
 
 		// Initialize variables.
-		this.species = species;                                 					// From intent.
-		this.currentPetId = currentPetId;                       					// From intent.
-		this.currentPet = MainActivity.petsDatabase.getPetById(currentPetId);		// Practically from intent.
+		this.petCursorPosition = petCursorPosition;           // From intent.
+		this.cursorSize = PetPreviewActivity.petsOfSpecies.getCount();
 
 		// Make the pet visible.
-		this.makePetAppear(currentPet);
+		this.makePetAppear(petCursorPosition);
 
 		// Handle "Previous" and "Next" buttons.
 		Button previousButton = (Button) act.findViewById(R.id.button_previous);
-		if (MainActivity.petsDatabase.hasPrevious(currentPetId, species))
-			previousButton.setEnabled(true);
-		else
+
+		if (petCursorPosition == 0) {
 			previousButton.setEnabled(false);
+		}
+		else {
+			previousButton.setEnabled(true);
+		}
 
 		Button nextButton = (Button) act.findViewById(R.id.button_next);
-		if (MainActivity.petsDatabase.hasNext(currentPetId, species))
-			nextButton.setEnabled(true);
-		else
+		if (petCursorPosition == cursorSize-1) {
 			nextButton.setEnabled(false);
+		}
+		else {
+			nextButton.setEnabled(true);
+		}
 	}
 
 
@@ -66,8 +74,10 @@ public class Controller {
 	// Makes a pet appear on screen.
 	//*****************************************************************************************************************************
 
-	private void makePetAppear(Pet pet)
+	private void makePetAppear(int petCursorPosition)
 	{
+		Pet pet = MainActivity.petsDatabase.transformDatabasePetToObjectPet(PetPreviewActivity.petsOfSpecies, petCursorPosition);
+
 		ImageView photo = (ImageView)act.findViewById(R.id.pet_photo);
 		int image = pet.getPhoto();
 		photo.setImageResource(image);
@@ -76,21 +86,21 @@ public class Controller {
 		name.setText(pet.getName());
 		name.setTextColor(Color.rgb(8,41,138));
 
-		TextView idnum = (TextView) act.findViewById(R.id.pet_info_id);
-		idnum.setText(pet.getPetId());
-		idnum.setTextColor(Color.rgb(8,41,138));
+		TextView chip = (TextView) act.findViewById(R.id.pet_chip_id);
+		chip.setText(pet.getChipId());
+		chip.setTextColor(Color.rgb(8,41,138));
 
 		TextView anim = (TextView) act.findViewById(R.id.pet_info_animal);
-		anim.setText(pet.getTypeOfAnimal());
+		anim.setText(pet.getSpecies());
 		anim.setTextColor(Color.rgb(8,41,138));
 
 		TextView breed = (TextView) act.findViewById(R.id.pet_info_breed);
 		breed.setText(pet.getBreed());
 		breed.setTextColor(Color.rgb(8,41,138));
 
-		TextView sex = (TextView) act.findViewById(R.id.pet_info_sex);
-		sex.setText(pet.getSex());
-		sex.setTextColor(Color.rgb(8,41,138));
+		TextView gender = (TextView) act.findViewById(R.id.pet_info_gender);
+		gender.setText(pet.getGender());
+		gender.setTextColor(Color.rgb(8,41,138));
 
 		TextView bdate = (TextView) act.findViewById(R.id.pet_info_bdate);
 		bdate.setText(pet.getDateOfBirthAsString());
@@ -100,21 +110,57 @@ public class Controller {
 		age.setText(String.valueOf(pet.calculateAge()));
 		age.setTextColor(Color.rgb(8,41,138));
 
-		TextView hair = (TextView) act.findViewById(R.id.pet_info_hair);
-		hair.setText(pet.getHairColour());
-		hair.setTextColor(Color.rgb(8,41,138));
+		TextView colour = (TextView) act.findViewById(R.id.pet_info_colour);
+		colour.setText(pet.getColour());
+		colour.setTextColor(Color.rgb(8,41,138));
 
-		TextView eye = (TextView) act.findViewById(R.id.pet_info_eyes);
-		eye.setText(pet.getEyeColour());
-		eye.setTextColor(Color.rgb(8,41,138));
+		TextView marks = (TextView) act.findViewById(R.id.pet_info_marks);
+		marks.setText(pet.getDistinguishingMarks());
+		marks.setTextColor(Color.rgb(8,41,138));
 
-		TextView hei = (TextView) act.findViewById(R.id.pet_info_height);
-		hei.setText(String.valueOf(pet.getHeightInCm()) + " cm");
-		hei.setTextColor(Color.rgb(8,41,138));
+		TextView owner = (TextView) act.findViewById(R.id.pet_info_owner_name);
+		owner.setText(pet.getOwnerName());
+		owner.setTextColor(Color.rgb(8,41,138));
 
-		TextView wei = (TextView) act.findViewById(R.id.pet_info_weight);
-		wei.setText(String.valueOf(pet.getWeightInKilos())+ " kilos");
-		wei.setTextColor(Color.rgb(8,41,138));
+		TextView ownerAdd = (TextView) act.findViewById(R.id.pet_info_owner_address);
+		if(act.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) // Portrait seems neater with wrapping.
+		{
+			String helper = pet.getOwnerAddress();
+			int secondCommaPosition = helper.indexOf(",", helper.indexOf(",") + 1);
+			if(secondCommaPosition != -1) helper = helper.substring(0, secondCommaPosition+1) + "\n" + helper.substring(secondCommaPosition+1, helper.length());
+			ownerAdd.setText(helper);
+		}
+		else
+		{
+			ownerAdd.setText(pet.getOwnerAddress());
+		}
+		ownerAdd.setTextColor(Color.rgb(8,41,138));
+
+		TextView ownerPhone = (TextView) act.findViewById(R.id.pet_info_owner_phone);
+		ownerPhone.setText(pet.getOwnerPhone());
+		ownerPhone.setTextColor(Color.rgb(8,41,138));
+
+		TextView vet = (TextView) act.findViewById(R.id.pet_info_vet_name);
+		vet.setText(pet.getVetName());
+		vet.setTextColor(Color.rgb(8,41,138));
+
+		TextView vetAdd = (TextView) act.findViewById(R.id.pet_info_vet_address);
+		if(act.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) // Portrait seems neater with wrapping.
+		{
+			String helper = pet.getVetAddress();
+			int secondCommaPosition = helper.indexOf(",", helper.indexOf(",") + 1);
+			if(secondCommaPosition != -1) helper = helper.substring(0, secondCommaPosition+1) + "\n" + helper.substring(secondCommaPosition+1, helper.length());
+			vetAdd.setText(helper);
+		}
+		else
+		{
+			vetAdd.setText(pet.getVetAddress());
+		}
+		vetAdd.setTextColor(Color.rgb(8,41,138));
+
+		TextView vetPhone = (TextView) act.findViewById(R.id.pet_info_vet_phone);
+		vetPhone.setText(pet.getVetPhone());
+		vetPhone.setTextColor(Color.rgb(8,41,138));
 
 		TextView comm = (TextView) act.findViewById(R.id.pet_info_comments);
 		comm.setText(String.valueOf(pet.getComments()));
@@ -132,26 +178,26 @@ public class Controller {
 		Button nextButton = (Button) act.findViewById(R.id.button_next);
 		Button previousButton = (Button) act.findViewById(R.id.button_previous);
 
-		// Specify the first next pet of the species in question.
-		Pet nextPet = MainActivity.petsDatabase.getNextPet(currentPetId, species);
-
-		// Just for safety reasons. The code will never enter this block. The button is already inactive.
-		if (nextPet == null)
+		if (petCursorPosition != cursorSize-1)
 		{
+			PetPreviewActivity.petsOfSpecies.moveToNext();
+		}
+		else
+		{
+			// Just for safety reasons. The code will never enter this block. The button is already inactive.
 			nextButton.setEnabled(false);
 			return;
 		}
 
 		// Make the first next pet appear on screen.
-		this.makePetAppear(nextPet);
-		currentPetId = nextPet.getPetId();
-		currentPet = nextPet;
+		this.petCursorPosition = PetPreviewActivity.petsOfSpecies.getPosition();
+		this.makePetAppear(PetPreviewActivity.petsOfSpecies.getPosition());
 
 		// Handle "Previous" button. We are sure now that a previous pet exists.
 		previousButton.setEnabled(true);
 
 		// Handle "Next" button accordingly.
-		if (MainActivity.petsDatabase.hasNext(currentPetId, species))
+		if (petCursorPosition != cursorSize-1)
 			nextButton.setEnabled(true);
 		else
 			nextButton.setEnabled(false);
@@ -168,26 +214,26 @@ public class Controller {
 		Button nextButton = (Button) act.findViewById(R.id.button_next);
 		Button previousButton = (Button) act.findViewById(R.id.button_previous);
 
-		// Specify the first previous pet of the species in question.
-		Pet previousPet = MainActivity.petsDatabase.getPreviousPet(currentPetId, species);
-
-		// Just for safety reasons. The code will never enter this block. The button is already inactive.
-		if (previousPet == null)
+		if (petCursorPosition != 0)
 		{
+			PetPreviewActivity.petsOfSpecies.moveToPrevious();
+		}
+		else
+		{
+			// Just for safety reasons. The code will never enter this block. The button is already inactive.
 			previousButton.setEnabled(false);
 			return;
 		}
 
 		// Make the first previous pet appear on screen.
-		this.makePetAppear(previousPet);
-		currentPetId = previousPet.getPetId();
-		currentPet = previousPet;
+		this.petCursorPosition = PetPreviewActivity.petsOfSpecies.getPosition();
+		this.makePetAppear(PetPreviewActivity.petsOfSpecies.getPosition());
 
 		// Handle "Next" button. We are sure now that a next pet exists.
 		nextButton.setEnabled(true);
 
 		// Handle "Previous" button accordingly.
-		if (MainActivity.petsDatabase.hasPrevious(currentPetId, species))
+		if (petCursorPosition != 0)
 			previousButton.setEnabled(true);
 		else
 			previousButton.setEnabled(false);
@@ -201,8 +247,7 @@ public class Controller {
 
 	public void saveState(Bundle savedInstanceState)
 	{
-		savedInstanceState.putString("currentPet", currentPetId);                // Commiting current Id pet to memory.
-		savedInstanceState.putString("species", species);                        // Commiting current species to memory.
+		savedInstanceState.putInt("currentPet", petCursorPosition);                // Commiting current pet to memory.
 	}
 
 
@@ -212,8 +257,7 @@ public class Controller {
 
 	public void restorePreviousState(Bundle savedInstanceState)
 	{
-		species = savedInstanceState.getString("species");
-		currentPetId = savedInstanceState.getString("currentPet");
-		InitializeBrowsing(species, currentPetId);
+		this.petCursorPosition = savedInstanceState.getInt("currentPet");
+		InitializeBrowsing(petCursorPosition);
 	}
 }

@@ -1,82 +1,65 @@
+//*****************************************************************************************************************************
+// Created by Angela-Maria Despotopoulou, Athens, Greece.
+// Latest Update: 23rd April 2017.
+//*****************************************************************************************************************************
+
 package com.angie.mypet;
 
-/* Created by:
- * A.M. Despotopoulou 12.03.2017
- * A class defining a pet.
- */
-
-import android.graphics.drawable.Drawable;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class Pet {
 
     private String name;
-    private String petId;
-    private int photo;
-    private Owner owner;
-    private Veterinarian vet;
-
-    private String sex;			// {MAL, FEM, UKN}
-    private Date dateOfBirth;
-
-    private String hairColour;  // {BLA, BRO, GOL, WHT, RED, GRA};
-    private String eyeColour;   // {BLA, BRO, GOL, BLU, RED, GRA, GRN};
-
-    private Pet mother;
-    private Pet father;
-
-    private double heightInCm;
-    private double weightInKilos;
-
-    private String comments;
-
-    private boolean isNeutered;
-    private boolean isOrganDonor;
-    private boolean isFullyVaccinated;
-
-    // TODO --> Transform These to Classes if needed.
-    private String typeOfAnimal;
+    private String species;
     private String breed;
+    private String chipId;
+    private Date dateOfBirth;
+    private String gender;
+    private String colour;
+    private String distinguishingMarks;
+    private String ownerName;
+    private String ownerAddress;
+    private String ownerPhone;
+    private String vetName;
+    private String vetAddress;
+    private String vetPhone;
+    private String comments;
+    private int photo;
 
 
+    //*****************************************************************************************************************************
+    // Constructor.
+    //*****************************************************************************************************************************
 
-
-    public Pet(String name, String petId, int photo, Owner owner, Veterinarian vet, String sex,
-               Date dateOfBirth, String hairColour, String eyeColour, Pet mother, Pet father, double heightInCm,
-               double weightInKilos, boolean isNeutered, boolean isOrganDonor, boolean isFullyVaccinated,
-               String typeOfAnimal, String breed) {
-        super();
+    public Pet(String name, String species, String breed, String chipId, Date dateOfBirth, String gender, String colour,
+               String distinguishingMarks, String ownerName, String ownerAddress, String ownerPhone, String vetName,
+               String vetAddress, String vetPhone, String comments, int photo) {
         this.name = name;
-        this.petId = petId;
-        this.photo = photo;
-        this.owner = owner;
-        this.vet = vet;
-        this.sex = sex;
-        this.dateOfBirth = dateOfBirth;
-        this.hairColour = hairColour;
-        this.eyeColour = eyeColour;
-        this.mother = mother;
-        this.father = father;
-        this.heightInCm = heightInCm;
-        this.weightInKilos = weightInKilos;
-        this.isNeutered = isNeutered;
-        this.isOrganDonor = isOrganDonor;
-        this.isFullyVaccinated = isFullyVaccinated;
-        this.typeOfAnimal = typeOfAnimal;
+        this.species = species;
         this.breed = breed;
-
-
-        if(vet != null)vet.setAsPatient(this); 	// Bidirectional mutable association between Pet and Veterinarian.
-        if(owner != null)owner.setAsPet(this); 		// Bidirectional mutable association between Pet and Owner.
+        this.chipId = chipId;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.colour = colour;
+        this.distinguishingMarks = distinguishingMarks;
+        this.ownerName = ownerName;
+        this.ownerAddress = ownerAddress;
+        this.ownerPhone = ownerPhone;
+        this.vetName = vetName;
+        this.vetAddress = vetAddress;
+        this.vetPhone = vetPhone;
+        this.comments = comments;
+        this.photo = photo;
     }
 
 
+    //*****************************************************************************************************************************
     // Calculates animal's age.
+    //*****************************************************************************************************************************
+
     public int calculateAge()
     {
         Calendar today = Calendar.getInstance();
@@ -88,10 +71,14 @@ public class Pet {
     }
 
 
+    //*****************************************************************************************************************************
     // Examines whether two pet objects are equal to one another.
+    // The only thing we can actually check are chip ids.
+    //*****************************************************************************************************************************
+
     public boolean equals(Pet pet)
     {
-        if(this.petId.equals(pet.petId))
+        if(this.chipId.equals(pet.chipId) && pet.chipId != null && this.chipId != null)
         {
             return true;
         }
@@ -99,212 +86,144 @@ public class Pet {
     }
 
 
+    //*****************************************************************************************************************************
+    // Getters and setters.
+    //*****************************************************************************************************************************
+
     public String getName() {
         return name;
     }
-
 
     public void setName(String name) {
         this.name = name;
     }
 
-
-    public String getPetId() {
-        return petId;
+    public String getSpecies() {
+        return species;
     }
 
-
-    public void setPetId(String petId) {
-        this.petId = petId;
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
-
-    public int getPhoto() {
-        return photo;
+    public String getBreed() {
+        return breed;
     }
 
-
-    public void setPhoto(int photo) {
-        this.photo = photo;
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
-
-    public Owner getOwner() {
-        return owner;
+    public String getChipId() {
+        return chipId;
     }
 
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-        owner.setAsPet(this);		// This line disconnects the pet to other owners, too.
+    public void setChipId(String chipId) {
+        this.chipId = chipId;
     }
-
-
-    public Veterinarian getVet() {
-        return vet;
-    }
-
-
-    public void setVet(Veterinarian vet) {
-        this.vet = vet;
-        vet.setAsPatient(this);      // This line disconnects the pet to other vets, too.
-    }
-
-
-    public String getSex() {
-        return sex;
-    }
-
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
 
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
-
 
     public String getDateOfBirthAsString() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM yyyy");
         String bdate = sdf.format(dateOfBirth);
         return bdate;
-
-
-       /* int year = dateOfBirth.getYear();
-        year -= 1900;
-        dateOfBirth.setYear(year);
-        String age = android.text.format.DateFormat.format("EEEE d MMMM yyyy", dateOfBirth).toString();
-        return age;*/
     }
-
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-
-    public String getHairColour() {
-        return hairColour;
+    public String getGender() {
+        return gender;
     }
 
-
-    public void setHairColour(String hairColour) {
-        this.hairColour = hairColour;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-
-    public String getEyeColour() {
-        return eyeColour;
+    public String getColour() {
+        return colour;
     }
 
-
-    public void setEyeColour(String eyeColour) {
-        this.eyeColour = eyeColour;
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
-
-    public Pet getMother() {
-        return mother;
+    public String getDistinguishingMarks() {
+        return distinguishingMarks;
     }
 
-
-    public void setMother(Pet mother) {
-        this.mother = mother;
+    public void setDistinguishingMarks(String distinguishingMarks) {
+        this.distinguishingMarks = distinguishingMarks;
     }
 
-
-    public Pet getFather() {
-        return father;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-
-    public void setFather(Pet father) {
-        this.father = father;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
-
-    public double getHeightInCm() {
-        return heightInCm;
+    public String getOwnerAddress() {
+        return ownerAddress;
     }
 
-
-    public void setHeightInCm(double heightInCm) {
-        this.heightInCm = heightInCm;
+    public void setOwnerAddress(String ownerAddress) {
+        this.ownerAddress = ownerAddress;
     }
 
-
-    public double getWeightInKilos() {
-        return weightInKilos;
+    public String getOwnerPhone() {
+        return ownerPhone;
     }
 
-
-    public void setWeightInKilos(double weightInKilos) {
-        this.weightInKilos = weightInKilos;
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
     }
 
-
-    public boolean isNeutered() {
-        return isNeutered;
+    public String getVetName() {
+        return vetName;
     }
 
-
-    public void setNeutered(boolean isNeutered) {
-        this.isNeutered = isNeutered;
+    public void setVetName(String vetName) {
+        this.vetName = vetName;
     }
 
-
-    public boolean isOrganDonor() {
-        return isOrganDonor;
+    public String getVetAddress() {
+        return vetAddress;
     }
 
-
-    public void setOrganDonor(boolean isOrganDonor) {
-        this.isOrganDonor = isOrganDonor;
+    public void setVetAddress(String vetAddress) {
+        this.vetAddress = vetAddress;
     }
 
-
-    public boolean isFullyVaccinated() {
-        return isFullyVaccinated;
+    public String getVetPhone() {
+        return vetPhone;
     }
 
-
-    public void setFullyVaccinated(boolean isFullyVaccinated) {
-        this.isFullyVaccinated = isFullyVaccinated;
+    public void setVetPhone(String vetPhone) {
+        this.vetPhone = vetPhone;
     }
-
-
-    public String getTypeOfAnimal() {
-        return typeOfAnimal;
-    }
-
-
-    public void setTypeOfAnimal(String typeOfAnimal) {
-        this.typeOfAnimal = typeOfAnimal;
-    }
-
-
-    public String getBreed() {
-        return breed;
-    }
-
-
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
 
     public String getComments() {
         return comments;
     }
 
-
     public void setComments(String comments) {
         this.comments = comments;
     }
 
+    public int getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(int photo) {
+        this.photo = photo;
+    }
 }
 
 
