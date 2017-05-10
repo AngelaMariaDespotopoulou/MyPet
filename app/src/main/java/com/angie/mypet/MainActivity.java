@@ -1,15 +1,16 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 30th April 2017.
+// Latest Update: 10th May 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -25,14 +26,14 @@ import java.util.List;
 //import android.util.Log;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends com.angie.mypet.Menu {
 
     private List<String> species;                   // A list to store all available species.
     private ListView listView;                      // A list view widget.
     private BaseAdapter speciesListAdapter;         // An adapter for the listView widget.
     private Intent speciesIntent;                   // A message towards the PetPreviewActivity.
     static PetsDatabase petsDatabase;               // A database of pets.
-
+    com.angie.mypet.Menu appMenu;                   // A handler for the menu actions.
 
     //*****************************************************************************************************************************
     // onCreate method.
@@ -93,6 +94,13 @@ public class MainActivity extends Activity {
         };
         listView.setAdapter(this.speciesListAdapter);
         listView.setVisibility(View.VISIBLE);
+
+        /*try {
+            test();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 
 
@@ -104,11 +112,52 @@ public class MainActivity extends Activity {
         super.onDestroy();
         petsDatabase.closeConnectionToDatabase();
     }
+
+
+    //*****************************************************************************************************************************
+    // Handles menu creation.
+    //*****************************************************************************************************************************
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean result = super.InflateMenu(menu, this);
+        return result;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Handles selection of menu items.
+    //*****************************************************************************************************************************
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean result = super.ItemSelected(item);
+        return result;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Refreshes menu every time it re-appears.
+    // This function is needed the Back Button is pressed between activities.
+    //*****************************************************************************************************************************
+
+    public boolean onPrepareOptionsMenu(android.view.Menu menu)
+    {
+        super.RefreshMenu(menu);
+        return true;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Defines the label on top of every visible activity.
+    //*****************************************************************************************************************************
+
+    @Override
+    protected int getTitleResource() {
+        return R.string.main_activity_title;
+    }
+
 }
-
-
-
-
 
 
 

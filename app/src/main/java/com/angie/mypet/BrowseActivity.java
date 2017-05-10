@@ -1,19 +1,21 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 23rd April 2017.
+// Latest Update: 10th May 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 
-public class BrowseActivity extends Activity
+public class BrowseActivity extends com.angie.mypet.Menu
 {
 	Controller c;                                                           // A helping class in order to avoid having too much code here.
+	com.angie.mypet.Menu appMenu;                                           // A handler for the menu actions.
+
 	public static final String EXTRA_PET_CURSOR_POSITION = "pet.to.show.on.screen";
 	int petCursorPositionFromIntent = 0;
 
@@ -76,5 +78,37 @@ public class BrowseActivity extends Activity
 		{
 			c.fetchPreviousPet();
 		}
+	}
+
+
+	//*****************************************************************************************************************************
+	// Handles menu creation.
+	//*****************************************************************************************************************************
+
+	@Override
+	public boolean onCreateOptionsMenu(android.view.Menu menu) {
+		boolean result = super.InflateMenu(menu, this);
+		return result;
+	}
+
+
+	//*****************************************************************************************************************************
+	// Handles selection of menu items.
+	//*****************************************************************************************************************************
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		boolean result = super.ItemSelected(item);
+		return result;
+	}
+
+
+	//*****************************************************************************************************************************
+	// Defines the label on top of every visible activity.
+	//*****************************************************************************************************************************
+
+	@Override
+	protected int getTitleResource() {
+		return R.string.pet_browse_activity_title;
 	}
 }

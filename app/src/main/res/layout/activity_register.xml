@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/activity_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.angie.mypet.LoginActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <ScrollView
+        android:id="@+id/scrollArea"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/photo_area"
+        android:layout_above="@id/buttons">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/register_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="35dp"
+                android:text="@string/register_welcome"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <!--<ImageView
+                android:id="@+id/logo_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/knock_label"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/logo" />-->
+
+            <EditText
+                android:id="@+id/register_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_label"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/hint_name"
+                />
+
+            <EditText
+                android:id="@+id/register_surname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/hint_surname"
+                />
+
+
+            <EditText
+                android:id="@+id/register_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_surname"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/hint_username"
+                />
+
+            <EditText
+                android:id="@+id/register_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_username"
+                android:layout_centerHorizontal="true"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/hint_password"
+                />
+
+            <EditText
+                android:id="@+id/register_confpassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_password"
+                android:layout_centerHorizontal="true"
+                android:inputType="textPassword"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/hint_confpassword"
+                />
+
+            <Button
+                android:id="@+id/register_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/register_confpassword"
+                android:text="@string/register_confirm"
+                android:textSize="13sp"
+                android:elevation="10dp"
+                android:onClick="onClickRegister"
+                android:background="#D6D6D6" />
+
+         </RelativeLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
+

@@ -1,14 +1,14 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 23rd April 2017.
+// Latest Update: 10th May 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,17 +16,18 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class PetPreviewActivity extends Activity {
+public class PetPreviewActivity extends com.angie.mypet.Menu {
 
-    public static final String EXTRA_SPECIES = "species_selected";        // Used for receiving messages from MainActivity.
-    String speciesFromIntent;                                             // The same practically.
-    private ListView listView;                                            // A list view widget.
-    Intent receivedIntent;                                                // A message received from MainActivity.
-    Intent browseIntent;                                                  // A new message directed to BrowseActivity.
-    public static Cursor petsOfSpecies ;                                  // A set of pets belonging to a particular species.
-    TextView hiddenText;                                                  // A hidden message for empty categories.
-
+    public static final String EXTRA_SPECIES = "species_selected";            // Used for receiving messages from MainActivity.
+    String speciesFromIntent;                                                 // The same practically.
+    private ListView listView;                                                // A list view widget.
+    Intent receivedIntent;                                                    // A message received from MainActivity.
+    Intent browseIntent;                                                      // A new message directed to BrowseActivity.
+    public static Cursor petsOfSpecies ;                                      // A set of pets belonging to a particular species.
+    TextView hiddenText;                                                      // A hidden message for empty categories.
+    final LoginController localLoginController = new LoginController(this);   // A handler responsible only to check if user has already taken care of login. (Another is instantiated by the LoginActivity class.)
 
     //*****************************************************************************************************************************
     // onCreate method.
@@ -73,11 +74,20 @@ public class PetPreviewActivity extends Activity {
                                                 Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);
                                                 row.startAnimation(animation1);
 
-                                                // Create and handle intent. The cursor is waiting. Passing the position (chosen pet) to the BrowseActivity.
-                                                browseIntent = new Intent(PetPreviewActivity.this, BrowseActivity.class);
-                                                Cursor cursor = (Cursor) list.getAdapter().getItem(index);
-                                                browseIntent.putExtra(BrowseActivity.EXTRA_PET_CURSOR_POSITION, cursor.getPosition());
-                                                startActivity(browseIntent);
+                                                // Ensure that only logged in users have access to the pets' details.
+                                                if(localLoginController.isUserAlreadyLoggedIn() != "" && localLoginController.isUserAlreadyLoggedIn() != null) {
+                                                    // Create and handle intent. The cursor is waiting. Passing the position (chosen pet) to the BrowseActivity.
+                                                    browseIntent = new Intent(PetPreviewActivity.this, BrowseActivity.class);
+                                                    Cursor cursor = (Cursor) list.getAdapter().getItem(index);
+                                                    browseIntent.putExtra(BrowseActivity.EXTRA_PET_CURSOR_POSITION, cursor.getPosition());
+                                                    startActivity(browseIntent);
+                                                }
+                                                else
+                                                {
+                                                    // Anonymous users receive a message.
+                                                    String toastMessage = getResources().getString(R.string.please_login);
+                                                    Toast.makeText(PetPreviewActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                                                }
                                             }
                                         }
         );
@@ -117,6 +127,52 @@ public class PetPreviewActivity extends Activity {
     public void onDestroy(){
         super.onDestroy();
         petsOfSpecies.close();
+    }
+
+
+    //*****************************************************************************************************************************
+    // Handles menu creation.
+    //*****************************************************************************************************************************
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        boolean result = super.InflateMenu(menu, this);
+        return result;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Handles selection of menu items.
+    //*****************************************************************************************************************************
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean result = super.ItemSelected(item);
+        return result;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Refreshes menu every time it re-appears.
+    // This function is needed when the user logs-out while on the BrowseActivity (Pet Details Screen). The Activity
+    // dies and returns to PetPreviewActivity. However, the PetPreviewActivity menu must be refreshed to "Log In".
+    // Also, when the Back Button is pressed between activities.
+    //*****************************************************************************************************************************
+
+    public boolean onPrepareOptionsMenu(android.view.Menu menu)
+    {
+        super.RefreshMenu(menu);
+        return true;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Defines the label on top of every visible activity.
+    //*****************************************************************************************************************************
+
+    @Override
+    protected int getTitleResource() {
+        return R.string.pet_preview_activity_title;
     }
 
 }
