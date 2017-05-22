@@ -1,9 +1,9 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 30th April 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.ui;
 
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.angie.mypet.R;
+import com.angie.mypet.database.Pet;
 
 
 public class Controller {
@@ -33,7 +36,7 @@ public class Controller {
 
 
 	//*****************************************************************************************************************************
-	// Initializes the Screen. Makes the pet indicated from PetPreviewActivity appear on screen.
+	// Initializes the Screen. Makes the pet indicated from PetPreviewsListFragment appear on screen.
 	// Also enables/disables the buttons accordingly.
 	//*****************************************************************************************************************************
 
@@ -45,7 +48,7 @@ public class Controller {
 
 		// Initialize variables.
 		this.petCursorPosition = petCursorPosition;           // From intent.
-		this.cursorSize = PetPreviewActivity.petsOfSpecies.getCount();
+		this.cursorSize = PetPreviewsListFragment.petsOfSpecies.getCount();
 
 		// Make the pet visible.
 		this.makePetAppear(petCursorPosition);
@@ -76,7 +79,7 @@ public class Controller {
 
 	private void makePetAppear(int petCursorPosition)
 	{
-		Pet pet = MainActivity.petsDatabase.transformDatabasePetToObjectPet(PetPreviewActivity.petsOfSpecies, petCursorPosition);
+		Pet pet = PetSpeciesListFragment.petsDatabase.transformDatabasePetToObjectPet(PetPreviewsListFragment.petsOfSpecies, petCursorPosition);
 
 		ImageView photo = (ImageView)act.findViewById(R.id.pet_photo);
 		int image = pet.getPhoto();
@@ -180,7 +183,7 @@ public class Controller {
 
 		if (petCursorPosition != cursorSize-1)
 		{
-			PetPreviewActivity.petsOfSpecies.moveToNext();
+			PetPreviewsListFragment.petsOfSpecies.moveToNext();
 		}
 		else
 		{
@@ -190,8 +193,8 @@ public class Controller {
 		}
 
 		// Make the first next pet appear on screen.
-		this.petCursorPosition = PetPreviewActivity.petsOfSpecies.getPosition();
-		this.makePetAppear(PetPreviewActivity.petsOfSpecies.getPosition());
+		this.petCursorPosition = PetPreviewsListFragment.petsOfSpecies.getPosition();
+		this.makePetAppear(PetPreviewsListFragment.petsOfSpecies.getPosition());
 
 		// Handle "Previous" button. We are sure now that a previous pet exists.
 		previousButton.setEnabled(true);
@@ -216,7 +219,7 @@ public class Controller {
 
 		if (petCursorPosition != 0)
 		{
-			PetPreviewActivity.petsOfSpecies.moveToPrevious();
+			PetPreviewsListFragment.petsOfSpecies.moveToPrevious();
 		}
 		else
 		{
@@ -226,8 +229,8 @@ public class Controller {
 		}
 
 		// Make the first previous pet appear on screen.
-		this.petCursorPosition = PetPreviewActivity.petsOfSpecies.getPosition();
-		this.makePetAppear(PetPreviewActivity.petsOfSpecies.getPosition());
+		this.petCursorPosition = PetPreviewsListFragment.petsOfSpecies.getPosition();
+		this.makePetAppear(PetPreviewsListFragment.petsOfSpecies.getPosition());
 
 		// Handle "Next" button. We are sure now that a next pet exists.
 		nextButton.setEnabled(true);

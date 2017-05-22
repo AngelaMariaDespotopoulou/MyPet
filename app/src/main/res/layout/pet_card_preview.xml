@@ -22,7 +22,6 @@
         android:contentDescription="@string/image_logo"
         android:scaleType="fitCenter" />
 
-
     <LinearLayout
         android:id="@+id/texts_area"
         android:layout_toRightOf="@+id/pet_image"
@@ -45,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_below="@+id/pet_preview_name"
             android:layout_marginLeft="20dp" />
     </LinearLayout>
 

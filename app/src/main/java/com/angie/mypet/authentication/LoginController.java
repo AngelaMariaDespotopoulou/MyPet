@@ -1,9 +1,9 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 10th May 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.authentication;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,8 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import com.angie.mypet.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +45,7 @@ public class LoginController {
     // Constructor.
     //*****************************************************************************************************************************
 
-    LoginController(AppCompatActivity act) {
+    public LoginController(AppCompatActivity act) {
         this.act = act;
     }
 
@@ -376,6 +378,12 @@ public class LoginController {
                 // Go back to LoginActivity (which will kill itself too).
                 act.finish();
             }
+
+            // Failure. Code already exists.
+            else if (responseCode == HttpsURLConnection.HTTP_CONFLICT) {
+                Toast.makeText(act, R.string.err_code_conflict, Toast.LENGTH_SHORT).show();
+            }
+
             // Failure
             else {
                 Toast.makeText(act, R.string.err_no_internet, Toast.LENGTH_SHORT).show();
@@ -434,12 +442,23 @@ public class LoginController {
                 in.close();
             }
 
+            // In case of conflict, produce a conflict message (not actually used).
+            else if (responseCode == HttpsURLConnection.HTTP_CONFLICT) {
+
+                response = new StringBuffer("Code already exists.");
+            }
+
+            // Everything wrong.
+            else
+            {
+                response = new StringBuffer("No Internet connection.");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
 
             os.close();
-            in.close();
             conn.disconnect();
         }
         return response.toString();

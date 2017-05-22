@@ -1,9 +1,9 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 30th April 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.widget.Toast;
+
+import com.angie.mypet.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -441,10 +443,10 @@ public class PetsDatabase {
 
 
     //*****************************************************************************************************************************
-    // Returns an ArrayList of all Pets belonging to a particular species.
+    // Returns a Cursor of all Pets belonging to a particular species.
     //*****************************************************************************************************************************
 
-    public Cursor generateListOfPetsBelongingToASpecies(String species) {
+    public Cursor generateCursorOfPetsBelongingToASpecies(String species) {
 
         try {
             db = dbHelper.getReadableDatabase();

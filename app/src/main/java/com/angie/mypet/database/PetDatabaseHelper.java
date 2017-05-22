@@ -1,9 +1,9 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 19th April 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,9 +1,9 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 10th May 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.angie.mypet.R;
 
 public class LoginActivity extends AppCompatActivity {
 

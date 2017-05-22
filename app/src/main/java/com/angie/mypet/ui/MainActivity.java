@@ -1,39 +1,24 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 10th May 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.ui;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.List;
+import com.angie.mypet.R;
 
 //import android.util.Log;
 
 
-public class MainActivity extends com.angie.mypet.Menu {
+public class MainActivity extends com.angie.mypet.ui.Menu implements PetSpeciesListFragment.OnFragmentInteractionListener {
 
-    private List<String> species;                   // A list to store all available species.
-    private ListView listView;                      // A list view widget.
-    private BaseAdapter speciesListAdapter;         // An adapter for the listView widget.
-    private Intent speciesIntent;                   // A message towards the PetPreviewActivity.
-    static PetsDatabase petsDatabase;               // A database of pets.
-    com.angie.mypet.Menu appMenu;                   // A handler for the menu actions.
+    static public String mergeMemory = "";
 
     //*****************************************************************************************************************************
     // onCreate method.
@@ -46,73 +31,7 @@ public class MainActivity extends com.angie.mypet.Menu {
         // Standard procedure.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if (savedInstanceState != null) {
-            //c.restorePreviousState(savedInstanceState);
-        }
-
-        // Creating the database containing all the Pets. (Hard-coded for the moment.)
-        petsDatabase = new PetsDatabase(this.getBaseContext());
-        species = petsDatabase.generateSpeciesList();
-
-        // Assigning a listener to the species view.
-        listView = (ListView) findViewById(R.id.species_list_view);
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-
-                    public void onItemClick(AdapterView<?> list, View row, int index, long rowId) {
-
-                        // Let's animate things a bit...
-                        Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);
-                        row.startAnimation(animation1);
-
-                        // Create and handle intent. Pass the selected species to the PetPreviewActivity.
-                        speciesIntent = new Intent(MainActivity.this, PetPreviewActivity.class);
-                        String choice = list.getAdapter().getItem(index).toString();
-                        speciesIntent.putExtra(PetPreviewActivity.EXTRA_SPECIES, choice);
-                        startActivity(speciesIntent);
-                    }
-                }
-        );
-
-        // Aesthetic changes.
-        listView.setCacheColorHint(0);
-        listView.setBackgroundResource(R.drawable.vector);
-
-        // Assigning a simple adapter (provided by Android) to the list view.
-        speciesListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, species) {
-            @Override
-            // Handling aesthetic aspects.
-            public View getView(int position, View convertView, ViewGroup parent) {
-                TextView textView = (TextView) super.getView(position, convertView, parent);
-                textView.setTextColor(Color.rgb(145, 42, 42));
-                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                textView.setShadowLayer(1.5f, -2, 2, Color.GRAY);
-                textView.setTextSize(20);
-                return textView;
-            }
-        };
-        listView.setAdapter(this.speciesListAdapter);
-        listView.setVisibility(View.VISIBLE);
-
-        /*try {
-            test();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
-
-
-    //*****************************************************************************************************************************
-    // onDestroy method.
-    // Closing the active cursor.
-    //*****************************************************************************************************************************
-    public void onDestroy(){
-        super.onDestroy();
-        petsDatabase.closeConnectionToDatabase();
-    }
-
 
     //*****************************************************************************************************************************
     // Handles menu creation.
@@ -155,6 +74,22 @@ public class MainActivity extends com.angie.mypet.Menu {
     @Override
     protected int getTitleResource() {
         return R.string.main_activity_title;
+    }
+
+
+    @Override
+    public void onPetSpeciesSelected(String selectedSpecies) {
+        View fragmentContainer = findViewById(R.id.fragment_container);
+        boolean isDualPane = fragmentContainer != null &&
+                fragmentContainer.getVisibility() == View.VISIBLE;
+
+        if (isDualPane) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, PetPreviewsListFragment.newInstance(selectedSpecies));
+            fragmentTransaction.commit();
+        } else {
+            startActivity(PetPreviewActivity.getStartIntent(this, selectedSpecies));
+        }
     }
 
 }

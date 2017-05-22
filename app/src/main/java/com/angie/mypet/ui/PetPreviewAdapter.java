@@ -1,9 +1,9 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 23rd April 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.ui;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.angie.mypet.R;
+import com.angie.mypet.database.PetManagementContract;
 
 public class PetPreviewAdapter extends CursorAdapter {
 

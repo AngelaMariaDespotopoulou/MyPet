@@ -1,14 +1,18 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 10th May 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.angie.mypet.R;
+import com.angie.mypet.authentication.LoginActivity;
+import com.angie.mypet.authentication.LoginController;
 
 
 public abstract class Menu extends AppCompatActivity {

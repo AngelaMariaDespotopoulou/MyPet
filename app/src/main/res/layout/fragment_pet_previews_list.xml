@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.angie.mypet.PetPreviewActivity">
+    tools:context="com.angie.mypet.ui.PetPreviewsListFragment">
 
     <TextView
         android:id="@+id/hidden_message"
@@ -29,6 +29,3 @@
         android:layout_weight="1"/>
 
 </android.support.constraint.ConstraintLayout>
-
-
-

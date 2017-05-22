@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.angie.mypet.LoginActivity"
+    tools:context="com.angie.mypet.authentication.LoginActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -97,7 +97,7 @@
                     android:text="@string/register_button"
                     android:textSize="12sp"
                     android:elevation="10dp"
-                    android:textColor="#8E8E8E"
+                    android:textColor="#990000"
                     android:background="#EEEEEE" />
 
             </LinearLayout>

@@ -1,20 +1,22 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 10th May 2017.
+// Latest Update: 22th May 2017.
 //*****************************************************************************************************************************
 
-package com.angie.mypet;
+package com.angie.mypet.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.angie.mypet.R;
 
-public class BrowseActivity extends com.angie.mypet.Menu
+
+public class BrowseActivity extends com.angie.mypet.ui.Menu
 {
 	Controller c;                                                           // A helping class in order to avoid having too much code here.
-	com.angie.mypet.Menu appMenu;                                           // A handler for the menu actions.
+	com.angie.mypet.ui.Menu appMenu;                                           // A handler for the menu actions.
 
 	public static final String EXTRA_PET_CURSOR_POSITION = "pet.to.show.on.screen";
 	int petCursorPositionFromIntent = 0;
