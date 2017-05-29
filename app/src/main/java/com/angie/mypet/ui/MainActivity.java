@@ -1,6 +1,6 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 22th May 2017.
+// Latest Update: 29th May 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet.ui;
@@ -90,6 +90,26 @@ public class MainActivity extends com.angie.mypet.ui.Menu implements PetSpeciesL
         } else {
             startActivity(PetPreviewActivity.getStartIntent(this, selectedSpecies));
         }
+    }
+
+
+    //*****************************************************************************************************************************
+    // Deletes from the database the Pet displayed. Not actually needed here.
+    //*****************************************************************************************************************************
+
+    protected void deleteCurrentPet()
+    {
+        return;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Edits on the database the Pet displayed. Not actually needed here.
+    //*****************************************************************************************************************************
+
+    protected void editCurrentPet()
+    {
+        return;
     }
 
 }

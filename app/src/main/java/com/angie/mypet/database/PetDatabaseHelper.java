@@ -61,6 +61,7 @@ public class PetDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
     //*****************************************************************************************************************************
     // The method that creates the database (in our case a table where "Pets" reside).
     //*****************************************************************************************************************************
@@ -68,6 +69,7 @@ public class PetDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PETS);
     }
+
 
     //*****************************************************************************************************************************
     // The upgrade policy for the database is to simply discard the data and start over.
@@ -77,6 +79,7 @@ public class PetDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_PETS);
         onCreate(db);
     }
+
 
     //*****************************************************************************************************************************
     // The downgrade policy for the database is to simply discard the data and start over.

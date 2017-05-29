@@ -29,8 +29,9 @@
             android:name=".ui.PetPreviewActivity"
             android:label="@string/app_name" />
         <activity android:name=".authentication.LoginActivity" />
-        <activity android:name=".authentication.RegisterActivity"></activity>
-
+        <activity android:name=".authentication.RegisterActivity" />
+        <activity android:name=".ui.AddPetActivity" />
+        <activity android:name=".ui.EditPetActivity"></activity>
     </application>
 
 </manifest>

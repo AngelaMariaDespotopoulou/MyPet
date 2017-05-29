@@ -1,6 +1,6 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 22th May 2017.
+// Latest Update: 29th May 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet.database;
@@ -477,6 +477,78 @@ public class PetsDatabase {
 
 
     //*****************************************************************************************************************************
+    // Returns the ID number of the Pet currently pointed by our cursor.
+    //*****************************************************************************************************************************
+
+    public String returnCurrentPetId() {
+
+        return cursor.getString(cursor.getColumnIndex(PetManagementContract.Pet._ID));
+    }
+
+
+    //*****************************************************************************************************************************
+    // Deletes a particular Pet from the database, given its unique id number.
+    //*****************************************************************************************************************************
+
+    public void deletePet(String petId)
+    {
+        int h = 1;
+        try {
+            db = dbHelper.getWritableDatabase();
+
+            // Issuing SQL deletion statement.
+            db.delete(PetManagementContract.Pet.TABLE_NAME, PetManagementContract.Pet._ID+"="+petId, null);
+        }
+        catch(SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Deletion unsuccessful", Toast.LENGTH_SHORT);
+            toast.show();
+         }
+    }
+
+
+    //*****************************************************************************************************************************
+    // Updates a particular Pet on the database, given its unique id number.
+    //*****************************************************************************************************************************
+
+    public void updatePet(String petId, HashMap<String, String> updateInfo)
+    {
+        ContentValues values = new ContentValues();
+        values.put(PetManagementContract.Pet.COLUMN_NAME_NAME, updateInfo.get("Name").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_GENDER, updateInfo.get("Gender").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_SPECIES, updateInfo.get("Species").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_BREED, updateInfo.get("Breed").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_COLOUR, updateInfo.get("Colour").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_DISTINGUISHING_MARKS, updateInfo.get("Marks").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_CHIP_ID, updateInfo.get("ChipId").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_OWNER_NAME, updateInfo.get("Owner").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_OWNER_ADDRESS, updateInfo.get("OwnerAdd").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_OWNER_PHONE, updateInfo.get("OwnerPhone").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_VET_NAME, updateInfo.get("Vet").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_VET_ADDRESS, updateInfo.get("VetAdd").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_VET_PHONE, updateInfo.get("VetPhone").toString());
+        values.put(PetManagementContract.Pet.COLUMN_NAME_COMMENTS, updateInfo.get("Comments").toString());
+
+        String selection = PetManagementContract.Pet._ID + " = " + petId;
+
+        int count = db.update(
+                PetManagementContract.Pet.TABLE_NAME,
+                values,
+                selection,
+                null);
+    }
+
+
+    //*****************************************************************************************************************************
+    // An ordinary getter for the private cursor.
+    //*****************************************************************************************************************************
+
+    public Cursor getCursor()
+    {
+        return this.cursor;
+    }
+
+
+    //*****************************************************************************************************************************
     // Closes the database.
     //*****************************************************************************************************************************
 
@@ -484,6 +556,8 @@ public class PetsDatabase {
     {
         db.close();
     }
+
+
 
     //*****************************************************************************************************************************
     // Returns a particular Pet when its id number is known.

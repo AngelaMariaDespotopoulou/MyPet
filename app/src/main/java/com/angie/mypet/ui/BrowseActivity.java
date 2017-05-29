@@ -1,6 +1,6 @@
 //*****************************************************************************************************************************
 // Created by Angela-Maria Despotopoulou, Athens, Greece.
-// Latest Update: 22th May 2017.
+// Latest Update: 29th May 2017.
 //*****************************************************************************************************************************
 
 package com.angie.mypet.ui;
@@ -15,19 +15,19 @@ import com.angie.mypet.R;
 
 public class BrowseActivity extends com.angie.mypet.ui.Menu
 {
-	Controller c;                                                           // A helping class in order to avoid having too much code here.
-	com.angie.mypet.ui.Menu appMenu;                                           // A handler for the menu actions.
+    Controller c;                                                           // A helping class in order to avoid having too much code here.
+    com.angie.mypet.ui.Menu appMenu;                                        // A handler for the menu actions.
 
-	public static final String EXTRA_PET_CURSOR_POSITION = "pet.to.show.on.screen";
-	int petCursorPositionFromIntent = 0;
+    public static final String EXTRA_PET_CURSOR_POSITION = "pet.to.show.on.screen";
+    int petCursorPositionFromIntent = 0;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_browse);
+        setContentView(R.layout.activity_browse);
 
-		// Determine Landscape or Portrait orientation and choose layout accordingly.
+        // Determine Landscape or Portrait orientation and choose layout accordingly.
 		/*if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 		{
 			setContentView(R.layout.activity_browse_landscape);
@@ -37,80 +37,112 @@ public class BrowseActivity extends com.angie.mypet.ui.Menu
 			setContentView(R.layout.activity_browse_portrait);
 		}*/
 
-		c = new Controller(this);
+        c = new Controller(this);
 
-		Intent intent = getIntent();
-		petCursorPositionFromIntent = intent.getIntExtra(EXTRA_PET_CURSOR_POSITION, 0);
+        Intent intent = getIntent();
+        petCursorPositionFromIntent = intent.getIntExtra(EXTRA_PET_CURSOR_POSITION, 0);
 
-		c.InitializeBrowsing(petCursorPositionFromIntent);
+        c.InitializeBrowsing(petCursorPositionFromIntent);
 
-		if (savedInstanceState != null) {
-			c.restorePreviousState(savedInstanceState);
-		}
-	}
-
-
-	//*****************************************************************************************************************************
-	// onSaveInstanceState method.
-	// Committing elements to memory for safe recovery.
-	//*****************************************************************************************************************************
-
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState)
-	{
-		c.saveState(savedInstanceState);
-	}
+        if (savedInstanceState != null) {
+            c.restorePreviousState(savedInstanceState);
+        }
+    }
 
 
-	//*****************************************************************************************************************************
-	// Take action when one of the buttons is clicked. Make the next or previous pet appear on screen respectively.
-	//*****************************************************************************************************************************
+    //*****************************************************************************************************************************
+    // onSaveInstanceState method.
+    // Committing elements to memory for safe recovery.
+    //*****************************************************************************************************************************
 
-	// "Next"  Button Clicked.
-	public void onClickFindNextPet(View view) {
-		if(c != null)
-		{
-			c.fetchNextPet();
-		}
-	}
-
-	// "Previous" Button Clicked.
-	public void onClickFindPreviousPet(View view) {
-		if(c != null)
-		{
-			c.fetchPreviousPet();
-		}
-	}
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        c.saveState(savedInstanceState);
+    }
 
 
-	//*****************************************************************************************************************************
-	// Handles menu creation.
-	//*****************************************************************************************************************************
+    //*****************************************************************************************************************************
+    // Take action when one of the buttons is clicked. Make the next or previous pet appear on screen respectively.
+    //*****************************************************************************************************************************
 
-	@Override
-	public boolean onCreateOptionsMenu(android.view.Menu menu) {
-		boolean result = super.InflateMenu(menu, this);
-		return result;
-	}
+    // "Next"  Button Clicked.
+    public void onClickFindNextPet(View view) {
+        if(c != null)
+        {
+            c.fetchNextPet();
+        }
+    }
+
+    // "Previous" Button Clicked.
+    public void onClickFindPreviousPet(View view) {
+        if(c != null)
+        {
+            c.fetchPreviousPet();
+        }
+    }
 
 
-	//*****************************************************************************************************************************
-	// Handles selection of menu items.
-	//*****************************************************************************************************************************
+    //*****************************************************************************************************************************
+    // Handles menu creation.
+    //*****************************************************************************************************************************
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		boolean result = super.ItemSelected(item);
-		return result;
-	}
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        boolean result = super.InflateMenu(menu, this);
+        return result;
+    }
 
 
-	//*****************************************************************************************************************************
-	// Defines the label on top of every visible activity.
-	//*****************************************************************************************************************************
+    //*****************************************************************************************************************************
+    // Handles selection of menu items.
+    //*****************************************************************************************************************************
 
-	@Override
-	protected int getTitleResource() {
-		return R.string.pet_browse_activity_title;
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean result = super.ItemSelected(item);
+        return result;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Defines the label on top of every visible activity.
+    //*****************************************************************************************************************************
+
+    @Override
+    protected int getTitleResource() {
+        return R.string.pet_browse_activity_title;
+    }
+
+
+    //*****************************************************************************************************************************
+    // Deletes from the database the Pet displayed. It is the reaction to a menu button tap.
+    //*****************************************************************************************************************************
+
+    protected void deleteCurrentPet()
+    {
+        c.deleteCurrentPet();
+    }
+
+
+    //*****************************************************************************************************************************
+    // Edits on the database the Pet displayed. It is the reaction to a menu button tap.
+    //*****************************************************************************************************************************
+
+    protected void editCurrentPet()
+    {
+        c.editCurrentPet();
+    }
+
+
+    //*****************************************************************************************************************************
+    // onResume is used to refresh the screen after e.g. pet updates.
+    //*****************************************************************************************************************************
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        PetSpeciesListFragment.petsDatabase.getCursor().requery();
+        this.recreate();
+    }
 }

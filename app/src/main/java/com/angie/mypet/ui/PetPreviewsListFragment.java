@@ -185,9 +185,4 @@ public class PetPreviewsListFragment extends Fragment {
         super.onDestroy();
         if (!(petsOfSpecies.isClosed())) petsOfSpecies.close();
     }
-
-
-
-
-
 }
